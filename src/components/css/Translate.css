@@ -1,0 +1,44 @@
+.translate-container{
+    width: 80%;
+    height: 30%;
+    /* background-color: blue; */
+    display: flex;
+    border: 2px solid black;
+}
+.translate-request{
+    width: 50%;
+    border-right: 1px solid black;
+}
+.translate-response{
+    width: 50%;
+}
+.txtarea {
+    resize: none;
+    outline: none;
+    border: none;
+    padding: 0px 5px;
+    width: 100%;
+    height: 100%;
+}
+
+
+.translate-header{
+    width: 80%;
+    height: 30px;
+    border: 2px solid black;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 5px;
+    margin-top: 2px;
+}
+
+select{
+    border: none;
+    outline: none;
+}
+.error {
+    border-radius: 5px;
+    border: 1px solid red;
+}
