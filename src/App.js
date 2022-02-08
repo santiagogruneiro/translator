@@ -1,7 +1,7 @@
 import './App.css';
 import {useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import Translate from './components/js/Translate';;
+import Translate from './components/js/Translate';
 import Menu from './components/js/Menu';
 
 function App() {
