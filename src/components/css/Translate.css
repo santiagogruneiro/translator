@@ -4,8 +4,8 @@
     display: flex;
     border: 1px solid  #d6d1d1;
     border-radius: 5px;
-    box-shadow: 1px 9px 23px 3px rgba(0,0,0,0.75);
--webkit-box-shadow: 1px 9px 23px 3px rgba(0,0,0,0.75);
+    box-shadow: 1px 7px 10px 3px rgba(0,0,0,0.75);
+-webkit-box-shadow: 1px 3px 10px 3px rgba(0,0,0,0.75);
 -moz-box-shadow: 1px 9px 23px 3px rgba(0,0,0,0.75);
 }
 .translate-request{
@@ -55,6 +55,7 @@
     border: #142d4c;
     background-color: inherit;
     color: inherit; 
+    user-select: none;
 }
 select option{
     border-radius: 50px;

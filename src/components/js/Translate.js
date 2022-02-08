@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../css/Translate.css'
 import languages from '../../languages'
 import { HiOutlineTranslate } from 'react-icons/hi'
@@ -7,17 +7,23 @@ import { handlerTranslator } from '../../services/handlerTranslator';
 const Translate = ({ darkMode }) => {
     const [data, setData] = useState({ text: undefined, to: 'es', from: 'en' })
     const [equalError, setEqualError] = useState(false)
-    const [currentLangName, setCurrentLangName] = useState()
+    const [currentLangName, setCurrentLangName] = useState({ from: 'English', to: 'Spanish' })
     const [translationResult, setTranslationResult] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const optionFrom = useRef(null)
+    const optionTo = useRef(null)
+    window.addEventListener('load', (e) => {
+        optionFrom.current = e.target.all.source
+        optionTo.current = e.target.all.target
+    })
     useEffect(() => {
         if (data.text) {
             if (equalError) {
-                alert(`Cannot translate from ${currentLangName} to ${currentLangName} for obvious reasons..\nPlease, change it!`)
+                alert(`Cannot translate from ${currentLangName.from} to ${currentLangName.to} for obvious reasons..\nPlease, change it!`)
                 return
             }
-            setIsLoading(true)
             const timer = setTimeout(() => {
+                setIsLoading(true)
                 handlerTranslator.translate(data).then(res => {
                     if (res) {
                         setTranslationResult(res[data.to])
@@ -32,24 +38,17 @@ const Translate = ({ darkMode }) => {
     }, [data.text])
     const handleChangeSelect = ({ target, target: { value, id } }) => {
         const values = value.split(",")
-        setCurrentLangName(target[values[1]].textContent)
         setEqualError(false)
         if (id === 'source') {
-            if (values[0] === data.to)
-                setEqualError(true)
-            setData((prev) => ({
-                text: prev.text,
-                to: prev.to,
-                from: values[0]
-            }))
+            setCurrentLangName({ ...currentLangName, from: target[values[1]].textContent })
+            optionFrom.current = target
+            if (values[0] === data.to) setEqualError(true)
+            setData({ ...data, from: values[0] })
         } else {
-            if (values[0] === data.from)
-                setEqualError(true)
-            setData((prev) => ({
-                text: prev.text,
-                to: values[0],
-                from: prev.from
-            }))
+            setCurrentLangName({ ...currentLangName, to: target[values[1]].textContent })
+            optionTo.current = target
+            if (values[0] === data.from) setEqualError(true)
+            setData({ ...data, to: values[0] })
         }
     }
     const handleChangeText = ({ target: { value } }) => {
@@ -59,24 +58,31 @@ const Translate = ({ darkMode }) => {
             from: prev.from
         }))
     }
+    const handleLanguagesSwitch = () => {
+        setData({ ...data, to: data.from, from: data.to })
+        const valueFrom = optionFrom.current.selectedIndex
+        const valueTo = optionTo.current.selectedIndex
+        optionFrom.current.selectedOptions[0].selected = false
+        optionTo.current.selectedOptions[0].selected = false
+        optionFrom.current[valueTo].selected = true
+        optionTo.current[valueFrom].selected = true
+    }
     return (
         <>
             <header className='translate-header'>
                 <div className="section-source">
                     <select onChange={handleChangeSelect} className={equalError ? 'select-source error' : 'select-source'} id='source'>
-                        <option selected disabled hidden value="en">English</option>
                         {languages.languages.map((l, index) => (
-                            <option className={darkMode ? " bg-dark text-light" :
+                            <option selected={l.name === 'English' ? true : false} className={darkMode ? " bg-dark text-light" :
                                 'bg-light text-dark'} value={[l.value, index + 1]}>{l.name}</option>
                         ))}
                     </select>
                 </div>
-                <HiOutlineTranslate onClick={() => alert('hola')} />
+                <HiOutlineTranslate onClick={handleLanguagesSwitch} />
                 <div className="section-target">
                     <select onChange={handleChangeSelect} className={equalError ? 'select-target error' : 'select-target'} id='target'>
-                        <option selected disabled hidden value="es">Spanish</option>
                         {languages.languages.map((l, index) => (
-                            <option className={darkMode ? " bg-dark text-light" :
+                            <option selected={l.name === 'Spanish' ? true : false} className={darkMode ? " bg-dark text-light" :
                                 'bg-light text-dark'} value={[l.value, index + 1]}>{l.name}</option>
                         ))}
                     </select>
