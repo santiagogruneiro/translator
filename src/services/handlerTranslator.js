@@ -1,7 +1,4 @@
-import axios from "axios"
-
 const baseUrl = 'https://nlp-translation.p.rapidapi.com/v1/'
-
 
 const translate = (data) => {
     const url = baseUrl+'translate'
@@ -14,19 +11,20 @@ const translate = (data) => {
           },
           body:JSON.stringify(data)
     }
-  
     return fetch(url, baseOptions)
     .then(res=>{
        return res.text()
         .then(text=>{
+            if(!res.ok){
+                alert(res.Error || 'Text more than 5000 characters is not allowed')
+                return undefined
+            }
             const data = text && JSON.parse(text)
             return data.translated_text
         })
     })
     .catch(err=>alert(err))
-
 }
 export const handlerTranslator = {
-    translate,
-    
+    translate, 
 }

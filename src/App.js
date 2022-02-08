@@ -1,21 +1,19 @@
 import './App.css';
-import { useEffect } from 'react';
-import { handlerTranslator } from './services/handlerTranslator'
+import {useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import Translate from './components/js/Translate';
-import axios from 'axios';
+import Translate from './components/js/Translate';;
+import Menu from './components/js/Menu';
 
 function App() {
-
-  useEffect(() => {
-    // axios.get('http://localhost:5000/api/counter')
-    // .then(r=>console.log(r))
-    // .catch(error=>console.log(error))
-  }, [])
-
+  const [darkMode, setDarkMode] = useState(false)
   return (
-    <div className="container-fluid p-0 m-0 ">
-      <Translate/>
+    <div
+      className={darkMode ? "container-fluid p-0 m-0 bg-dark text-light" :
+        "container-fluid p-0 m-0 bg-light text-dark"}>
+      <header className='app-header'>
+        <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
+      </header>
+      <Translate darkMode={darkMode}/>
     </div>
   );
 }
