@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../css/Translate.css'
 import languages from '../../languages'
-import { HiOutlineTranslate } from 'react-icons/hi'
+import { HiOutlineSwitchHorizontal } from 'react-icons/hi'
 import { handlerTranslator } from '../../services/handlerTranslator';
 
 const Translate = ({ darkMode }) => {
@@ -71,14 +71,14 @@ const Translate = ({ darkMode }) => {
         <>
             <header className='translate-header'>
                 <div className="section-source">
-                    <select onChange={handleChangeSelect} className={equalError ? 'select-source error' : 'select-source'} id='source'>
+                    <select  onChange={handleChangeSelect} className={equalError ? 'select-source error' : 'select-source'} id='source'>
                         {languages.languages.map((l, index) => (
                             <option selected={l.name === 'English' ? true : false} className={darkMode ? " bg-dark text-light" :
                                 'bg-light text-dark'} value={[l.value, index + 1]}>{l.name}</option>
                         ))}
                     </select>
                 </div>
-                <HiOutlineTranslate onClick={handleLanguagesSwitch} />
+                <HiOutlineSwitchHorizontal onClick={handleLanguagesSwitch} />
                 <div className="section-target">
                     <select onChange={handleChangeSelect} className={equalError ? 'select-target error' : 'select-target'} id='target'>
                         {languages.languages.map((l, index) => (
@@ -94,7 +94,7 @@ const Translate = ({ darkMode }) => {
                 </div>
                 <div className="translate-response">
                     <div className="response" readOnly >
-                        {translationResult ? translationResult : <p className='result-placeholder'>{isLoading ? 'Translating...' : 'Translation result'}</p>}
+                        {translationResult ? <p className='translationResult'>{translationResult}</p>  : <p className='result-placeholder'>{isLoading ? 'Translating...' : 'Translation result'}</p>}
                     </div>
                 </div>
             </div>
