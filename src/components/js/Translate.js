@@ -24,11 +24,11 @@ const Translate = ({ darkMode }) => {
             }
             const timer = setTimeout(() => {
                 setIsLoading(true)
-                handlerTranslator.translate(data).then(res => {
-                    if (res) {
-                        setTranslationResult(res[data.to])
-                    }
-                })
+                // handlerTranslator.translate(data).then(res => {
+                //     if (res) {
+                //         setTranslationResult(res[data.to])
+                //     }
+                // })
             }, 1000)
             return () => {
                 clearTimeout(timer)
